@@ -1,108 +1,131 @@
-# Hospital Management Database
+# PostgreSQL Database Administration (DBA) Learning Portfolio
 
-## Project overview
+Welcome to my Database Administration learning portfolio.
 
-This project is a relational database exercise built with PostgreSQL. It models three core areas of a hospital workflow: patients, doctors, and appointments. The project is part of my ongoing PostgreSQL and Database Administration (DBA) learning portfolio.
+I am an aspiring Database Administrator developing practical skills in PostgreSQL database management, SQL, database security, backup and recovery, and performance optimization.
 
-## Objectives
+My goal is to build the technical knowledge and hands-on experience required to pursue a career in Database Administration and the wider IT industry.
 
-- Design and inspect a relational database schema.
-- Apply primary-key, unique, and foreign-key constraints.
-- Connect related tables using SQL `JOIN` operations.
-- Practise filtering, grouping, aggregation, and reporting queries.
-- Explore appointment analysis by year and calendar quarter.
+## About Me
 
-## Technology
+I have an academic background in Mechatronics and Systems Engineering and an interest in database technologies, automation, and information systems.
 
-- PostgreSQL 18.6
-- SQL
-- pgAdmin 4 / PostgreSQL command-line tools
+I am currently building my DBA skills through structured learning, practical exercises, and real-world-inspired database projects.
 
-## Database structure
+## Technical Environment
 
-| Table | Purpose | Important columns |
-|---|---|---|
-| `patient` | Stores patient details | `id`, `first_name`, `last_name`, `email`, `gender`, `address` |
-| `doctors` | Stores doctor details | `id`, `first_name`, `last_name`, `email`, `gender`, `address` |
-| `appointments` | Records appointments and links patients to doctors | `id`, `patient_id`, `doctor_id`, `appointment_date`, `appointment_status` |
+| Tool / Technology | Purpose |
+|---|---|
+| PostgreSQL 18.6 | Relational database management |
+| pgAdmin 4 | Database administration interface |
+| SQL | Database creation, querying and management |
+| Python | Programming and database connectivity |
+| Windows | Development environment |
 
-### Relationships
+## Featured Project: Hospital Management Database
 
-- One patient can have multiple appointments.
-- One doctor can have multiple appointments.
-- Each appointment references one patient and one doctor.
+### Project Overview
 
-```mermaid
-erDiagram
-    patient ||--o{ appointments : has
-    doctors ||--o{ appointments : handles
+I developed a hospital management database using PostgreSQL to practise relational database design, data integrity, SQL queries, and database administration fundamentals.
 
-    patient {
-        integer id PK
-        varchar first_name
-        varchar last_name
-        varchar email UK
-        varchar gender
-        varchar address
-    }
-    doctors {
-        integer id PK
-        varchar first_name
-        varchar last_name
-        varchar email UK
-        varchar gender
-        varchar address
-    }
-    appointments {
-        integer id PK
-        integer patient_id FK
-        integer doctor_id FK
-        timestamp appointment_date
-        varchar appointment_status
-    }
+The project contains the following tables:
+
+| Table | Number of Records |
+|---|---:|
+| Patient | 10,000 |
+| Doctors | 500 |
+| Appointments | 20,000 |
+| Payments | Planned |
+
+### Database Relationships
+
+- Each appointment references an existing patient.
+- Each appointment references an existing doctor.
+- Foreign key constraints maintain referential integrity between the tables.
+
+### Skills Demonstrated
+
+- Creating and managing relational database tables.
+- Defining primary keys and foreign keys.
+- Applying unique constraints.
+- Generating test records using PostgreSQL `generate_series()`.
+- Retrieving related information using SQL JOINs.
+- Inspecting database structures and constraints.
+- Analysing query execution plans using `EXPLAIN ANALYZE`.
+- Understanding sequential scans and index scans.
+- Creating and understanding database indexes.
+
+## SQL Concepts Practised
+
+Some of the PostgreSQL concepts I have practised include:
+
+```sql
+SELECT version();
+
+SELECT current_database();
+
+SELECT current_user;
+
+SHOW port;
 ```
 
-## Constraints implemented
+I have also practised:
 
-- Primary keys uniquely identify rows in all three tables.
-- Patient email addresses have a `UNIQUE` constraint.
-- Doctor email addresses have a `UNIQUE` constraint.
-- Appointment `patient_id` references `patient.id`.
-- Appointment `doctor_id` references `doctors.id`.
-- Required columns are defined as `NOT NULL` in the schema.
+- SELECT, WHERE and ORDER BY
+- INNER JOIN
+- Primary and foreign key constraints
+- Unique constraints and indexes
+- Information schema queries
+- EXPLAIN ANALYZE
+- Data generation with generate_series()
 
-## Files in this project
+## Learning Roadmap
 
-- `schema.sql` — portable table and constraint creation script based on the database schema export.
-- `schema_pg_dump.sql` — original schema-only export produced by `pg_dump` 18.6.
-- `queries.sql` — example queries for joins, patient/doctor appointment history, status summaries, `LEFT JOIN`, and quarterly reporting.
+| Learning Area | Status |
+|---|---|
+| Database fundamentals | In progress |
+| PostgreSQL administration | In progress |
+| SQL and relational database design | Practising |
+| Backup and recovery | Upcoming |
+| Database security | Upcoming |
+| Performance optimization | Upcoming |
+| Linux and cloud database administration | Upcoming |
+| DBA portfolio projects | In progress |
 
-## How to run
+## Repository Structure
 
-1. Create or select an empty PostgreSQL database for this project.
-2. Open `schema.sql` in pgAdmin Query Tool (connected to that database), or run it with `psql`.
-3. Execute the statements in `queries.sql` after adding suitable test records.
+```text
+postgresql-dba-learning-portfolio/
+│
+├── README.md
+│
+├── schema.sql
+│
+├── learning-journal/
+│   └── week-01-database-fundamentals.md
+│
+├── sql/
+│
+├── projects/
+│   └── hospital-database/
+│
+├── backup-and-recovery/
+│
+├── database-security/
+│
+└── performance-optimization/
+```
 
-The project currently contains the schema and practice queries. A data-loading script is not included yet; add only fictional or otherwise safely anonymised test records before publishing sample data.
+## Career Objective
 
-## DBA review notes and possible improvements
+My objective is to become a competent Database Administrator with practical experience in database management, data integrity, security, backup and recovery, and performance optimization.
 
-The exported schema shows that `patient.id` is generated by an identity column, while `doctors.id` and `appointments.id` are integer primary keys without identity generation. New doctor and appointment records therefore require IDs to be supplied unless the schema is deliberately enhanced.
+I am committed to documenting my learning journey, developing practical projects, and continuously improving my technical skills.
 
-Other possible enhancements to evaluate in a future iteration:
+## Disclaimer
 
-- Decide whether patient and doctor email addresses should be mandatory; they are currently nullable even though non-null values must be unique.
-- Add controlled values or `CHECK` constraints for fields such as `gender` and `appointment_status`, after defining the accepted values.
-- Review indexes for common appointment searches, such as by patient, doctor, and appointment date.
-- Define appropriate update/delete behaviour for the foreign keys based on the intended record-retention rules.
-- Add backup and restore documentation and test it on a separate database.
+This repository is for educational and portfolio purposes. Sample datasets should contain fictional or anonymized records only. No real patient information, passwords, or database credentials should be published.
 
-These are improvement ideas, not features currently implemented in the exported schema.
+## Progress
 
-## Learning outcomes
-
-Through this project I am practising relational schema inspection, primary and foreign keys, uniqueness constraints, multi-table joins, `LEFT JOIN`, aggregation with `GROUP BY`, and date-part analysis using `EXTRACT`.
-
-## Data protection
-
-No patient records or live personal data are included in this repository. Any future sample data should be fictional or safely anonymised.
+I will continue updating this repository as I complete new DBA lessons, practical exercises, and projects.
