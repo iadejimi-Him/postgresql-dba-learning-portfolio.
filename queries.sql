@@ -2,6 +2,7 @@
 -- Run these queries after creating the schema and loading suitable test data.
 
 -- 1. View every appointment with the associated patient and doctor.
+
 SELECT
     a.id AS appointment_id,
     p.first_name || ' ' || p.last_name AS patient_name,
